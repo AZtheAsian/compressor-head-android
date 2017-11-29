@@ -14,6 +14,9 @@ public class CompressorHead {
     public static final String WEBP = "webp";
 
     public static String getURL(@NonNull String imageURl, int width, int height, String format) {
+        if(!isHeightValid(height)){
+            return null;
+        }
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
                 .authority(Constants.BASE_URL)
@@ -23,5 +26,9 @@ public class CompressorHead {
                 .appendQueryParameter("height", String.valueOf(height))
                 .appendQueryParameter("format", format);
         return builder.build().toString();
+    }
+    
+    private static boolean isHeightValid(int height) {
+        return height > 0 && height < 4000;
     }
 }
